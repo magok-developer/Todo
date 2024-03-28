@@ -34,7 +34,7 @@ export default function Todo() {
   ];
 
   const formattedYear = `${today.getFullYear()} `;
-  const formattedMonth = `${month[today.getMonth() + 1]}`;
+  const formattedMonth = `${month[today.getMonth()]}`;
   const formattedDate = `${today.getDate()}`;
   const formattedWeek = `${week[today.getDay()]}`;
 
