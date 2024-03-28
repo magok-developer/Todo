@@ -22,9 +22,9 @@ const Container = styled.div`
   font-size: 14px;
   font-weight: bold;
 
-  position: fixed;
-  bottom: 100px;
-  left: 420px;
+  position: absolute;
+  bottom: -20px;
+  left: 190px;
 
   cursor: pointer;
 
