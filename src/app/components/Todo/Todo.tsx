@@ -4,63 +4,73 @@ import Button from "@/Components/Button/Button";
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
+import { useState } from "react";
+
+var month = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "June",
+  "July",
+  "Aug",
+  "Sep",
+  "Oct",
+  "Nov",
+  "Dec",
+];
+
+const week = [
+  "SUNDAY",
+  "MONDAY",
+  "TUESDAY",
+  "WEDNESDAY",
+  "THURSDAY",
+  "FRIDAY",
+  "SATURDAY",
+];
+
+const data = [
+  {
+    id: 1,
+    todo: "끝내주게 프로젝트 하기",
+    date: "2023-04-01",
+    checked: false,
+    isEditable: false,
+  },
+  {
+    id: 2,
+    todo: "끝내주게 포폴 하기",
+    date: "2023-04-06",
+    checked: false,
+    isEditable: false,
+  },
+  {
+    id: 3,
+    todo: "디데이",
+    date: "2023-03-28",
+    checked: false,
+    isEditable: false,
+  },
+];
 
 export default function Todo() {
+  const [todo, setTodo] = useState(data);
   const today = new Date();
-
-  var month = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "June",
-    "July",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const week = [
-    "SUNDAY",
-    "MONDAY",
-    "TUESDAY",
-    "WEDNESDAY",
-    "THURSDAY",
-    "FRIDAY",
-    "SATURDAY",
-  ];
 
   const formattedYear = `${today.getFullYear()} `;
   const formattedMonth = `${month[today.getMonth()]}`;
   const formattedDate = `${today.getDate()}`;
   const formattedWeek = `${week[today.getDay()]}`;
 
-  const data = [
-    {
-      id: 1,
-      todo: "끝내주게 프로젝트 하기",
-      date: "2023-04-01",
-      checked: false,
-      isEditable: false,
-    },
-    {
-      id: 2,
-      todo: "끝내주게 포폴 하기",
-      date: "2023-04-06",
-      checked: false,
-      isEditable: false,
-    },
-    {
-      id: 3,
-      todo: "디데이",
-      date: "2023-03-28",
-      checked: false,
-      isEditable: false,
-    },
-  ];
+  const handleCheckClick = (id: number) => {
+    setTodo(
+      todo.map((item) =>
+        item.id === id ? { ...item, checked: !item.checked } : item
+      )
+    );
+  };
 
   return (
     <Container>
@@ -92,8 +102,8 @@ export default function Todo() {
         </DateWrap>
       </Title>
       <Content>
-        {data.map((item) => (
-          <ContentWrap>
+        {todo.map((item, index) => (
+          <ContentWrap key={`${item.id}_${index}`}>
             <Image
               src={
                 item.checked === false
@@ -103,8 +113,10 @@ export default function Todo() {
               width={24}
               height={24}
               alt='check'
+              onClick={() => handleCheckClick(item.id)}
+              style={{ cursor: "pointer" }}
             />
-            <div>{item.todo}</div>
+            <div className={item.checked ? "checked" : ""}>{item.todo}</div>
             <div style={{ display: "flex", gap: 8 }}>
               <div>{item.date}</div>
               <div className='icon-wrap'>
@@ -185,5 +197,8 @@ const ContentWrap = styled.div`
       opacity: 1;
       cursor: pointer;
     }
+  }
+  .checked {
+    text-decoration: line-through;
   }
 `;
