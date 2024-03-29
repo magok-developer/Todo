@@ -162,4 +162,6 @@ const DDayText = styled.div<{ color: string }>`
   width: 50px;
   color: ${({ color }) => color};
   text-align: center;
+  font-weight: bold;
+  font-size: 12px;
 `;

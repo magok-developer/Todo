@@ -25,7 +25,7 @@ const CreateTodo = ({ onCreate }: Props) => {
     setInput(e.target.value);
   };
 
-  const handleClick = (e: any) => {
+  const handleClick = () => {
     if (input.trim() === "") {
       return;
     } else if (dDay < 0) {
@@ -138,6 +138,6 @@ const Wrap = styled.div`
 const DDayText = styled.div<{ color: string }>`
   width: 300px;
   color: ${({ color }) => color};
-
+  font-weight: bold;
   font-size: 12px;
 `;
