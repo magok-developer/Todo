@@ -151,6 +151,8 @@ export default function Todo() {
     nextId.current++;
   };
 
+  const todoLength = todo.filter((item) => item.checked === false);
+
   return (
     <Container>
       <Title>
@@ -197,7 +199,7 @@ export default function Todo() {
         <Menu>
           <MenuWrap>
             <div style={{ color: color.black, fontWeight: "bold" }}>
-              {todo.length} items
+              {todoLength.length} items
             </div>
             <FilterWrap>
               <div
@@ -252,7 +254,7 @@ const Title = styled.div`
 
   width: 512px;
   background-color: ${color.white};
-  padding: 12px 16px;
+  padding: 12px 30px;
   box-sizing: border-box;
 
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
