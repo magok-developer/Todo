@@ -59,6 +59,7 @@ const CreateTodo = ({ onCreate }: Props) => {
 
   const handleClose = () => {
     setNewTodoVisible(false);
+    setInput("");
   };
 
   return (
