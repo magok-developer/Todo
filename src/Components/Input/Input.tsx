@@ -1,26 +1,47 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
+import { InputHTMLAttributes } from "react";
 
-type Props = {
-  value: string;
-  handleChange: (id: number, e: any) => void;
-  id: number;
+type INPUT_STYLE_PROPS = {
+  mode?: "small" | "medium";
 };
-const Input = ({ value, handleChange, id }: Props) => {
-  return <InputStyle value={value} onChange={(e) => handleChange(id, e)} />;
+
+type Props = INPUT_STYLE_PROPS & {
+  value?: string;
+  onChange: (e: any) => void;
+  style?: React.CSSProperties;
+};
+
+const Input = ({ value, onChange, mode = "medium", style }: Props) => {
+  return (
+    <InputStyle mode-={mode} value={value} onChange={onChange} style={style} />
+  );
 };
 
 export default Input;
 
-const InputStyle = styled.input`
-  border: 1px solid ${color.deepGray};
-  width: 200px;
-  height: 30px;
-  border-radius: 4px;
-  padding: 8px;
+const SIZE_TYPE = {
+  ["small"]: {
+    width: "200px",
+    padding: "8px",
+    textAlign: "center",
+  },
+  ["medium"]: {
+    width: "380px",
+    padding: "12px",
+  },
+};
+
+const InputStyle = styled.input<any>`
+  ${({ mode }) => SIZE_TYPE[mode as "medium"]};
+  display: flex;
+  align-items: center;
+
   outline: none;
   box-sizing: border-box;
-  text-align: center;
 
+  height: 30px;
+  border-radius: 4px;
   font-size: 14px;
+  border: 1px solid ${color.deepGray};
 `;

@@ -1,10 +1,9 @@
 "use client";
 
-import Button from "@/Components/Button/Button";
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import TodoItem from "./Components/TodoItem";
 import CreateTodo from "./Components/CreateTodo";
 
@@ -37,7 +36,7 @@ const data = [
   {
     id: 1,
     todo: "끝내주게 프로젝트 하기",
-    date: "2023-04-01",
+    date: "2024-04-01",
     checked: false,
     isEditable: false,
   },
@@ -51,35 +50,7 @@ const data = [
   {
     id: 3,
     todo: "디데이",
-    date: "2023-03-28",
-    checked: false,
-    isEditable: false,
-  },
-  {
-    id: 4,
-    todo: "디데이",
-    date: "2023-03-28",
-    checked: false,
-    isEditable: false,
-  },
-  {
-    id: 5,
-    todo: "디데이",
-    date: "2023-03-28",
-    checked: false,
-    isEditable: false,
-  },
-  {
-    id: 6,
-    todo: "디데이",
-    date: "2023-03-28",
-    checked: false,
-    isEditable: false,
-  },
-  {
-    id: 7,
-    todo: "디데이",
-    date: "2023-03-28",
+    date: "2024-03-28",
     checked: false,
     isEditable: false,
   },
@@ -97,7 +68,6 @@ export default function Todo() {
   const [todo, setTodo] = useState<Todo[]>(data);
   const [menuVisible, setMenuVisible] = useState(false);
   const [filter, setFilter] = useState("all");
-  const [newTodoVisible, setNewTodoVisible] = useState(false);
 
   const today = new Date();
 
@@ -105,6 +75,8 @@ export default function Todo() {
   const formattedMonth = `${month[today.getMonth()]}`;
   const formattedDate = `${today.getDate()}`;
   const formattedWeek = `${week[today.getDay()]}`;
+
+  const nextId = useRef(4);
 
   const handleClickCheck = (id: number) => {
     setTodo(
@@ -166,8 +138,17 @@ export default function Todo() {
     setTodo(todo.filter((item) => !item.checked));
   };
 
-  const handleClickNewTodo = () => {
-    setNewTodoVisible(true);
+  const createTodo = (text: string, date: string) => {
+    const todo = {
+      id: nextId.current,
+      todo: text,
+      date: date,
+      checked: false,
+      isEditable: false,
+    };
+
+    setTodo((prevTodo) => [...prevTodo, todo]);
+    nextId.current++;
   };
 
   return (
@@ -255,11 +236,8 @@ export default function Todo() {
           handleClickEdit={handleClickEdit}
           handleChange={handleChange}
         />
-        {newTodoVisible ? (
-          <CreateTodo />
-        ) : (
-          <Button onClick={handleClickNewTodo}>+ New Todo</Button>
-        )}
+
+        <CreateTodo onCreate={createTodo} />
       </Content>
     </Container>
   );

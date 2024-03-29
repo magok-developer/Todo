@@ -19,6 +19,31 @@ const TodoItem = ({
   handleClickEdit,
   handleChange,
 }: Props) => {
+  const calculateDday = (targetDate: string): number => {
+    const today = new Date();
+    const target = new Date(targetDate);
+
+    const difference = target.getTime() - today.getTime();
+
+    const daysDifference = Math.ceil(difference / (1000 * 60 * 60 * 24));
+
+    return daysDifference;
+  };
+
+  const dDay = (date: string) => {
+    const daysDifference = calculateDday(date);
+
+    if (daysDifference > 0) {
+      return <DDayText color={color.blue}>D-{daysDifference}</DDayText>;
+    } else if (daysDifference === 0) {
+      return <DDayText color={color.green}>D-DAY!</DDayText>;
+    } else if (daysDifference < 0) {
+      return (
+        <DDayText color={color.red}>D+{Math.abs(daysDifference)}</DDayText>
+      );
+    }
+  };
+
   return (
     <Container>
       {todo.map((item, index) => (
@@ -36,14 +61,19 @@ const TodoItem = ({
             style={{ cursor: "pointer" }}
           />
           {item.isEditable ? (
-            <Input value={item.todo} handleChange={handleChange} id={item.id} />
+            <Input
+              mode='small'
+              value={item.todo}
+              onChange={(e) => handleChange(item.id, e)}
+              style={{ width: "200px", textAlign: "center" }}
+            />
           ) : (
             <div className={item.checked ? "checked" : "common"}>
               {item.todo}
             </div>
           )}
           <div style={{ display: "flex", gap: 8 }}>
-            <div>{item.date}</div>
+            <div>{dDay(item.date)}</div>
             <div className='icon-wrap'>
               {item.isEditable ? (
                 <Image
@@ -126,4 +156,10 @@ const ContentWrap = styled.div`
   .checked {
     text-decoration: line-through;
   }
+`;
+
+const DDayText = styled.div<{ color: string }>`
+  width: 50px;
+  color: ${({ color }) => color};
+  text-align: center;
 `;
