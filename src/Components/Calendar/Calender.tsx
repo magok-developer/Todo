@@ -108,6 +108,7 @@ export default Calender;
 const Container = styled.div`
   display: flex;
   align-items: center;
+
   .react-datepicker__month-container {
     display: flex;
     flex-direction: column;
