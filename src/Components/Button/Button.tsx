@@ -3,10 +3,11 @@ import styled from "@emotion/styled";
 
 type Props = {
   children: any;
+  onClick: () => void;
 };
 
-const Button = ({ children }: Props) => {
-  return <Container>{children}</Container>;
+const Button = ({ children, onClick }: Props) => {
+  return <Container onClick={onClick}>{children}</Container>;
 };
 
 export default Button;
