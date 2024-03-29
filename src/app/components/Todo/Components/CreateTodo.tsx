@@ -4,6 +4,7 @@ import Input from "@/Components/Input/Input";
 import useChangeDateRange from "@/hook/useChangeDateRange";
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
+import Image from "next/image";
 
 import { useEffect, useState } from "react";
 
@@ -56,6 +57,10 @@ const CreateTodo = ({ onCreate }: Props) => {
     }
   };
 
+  const handleClose = () => {
+    setNewTodoVisible(false);
+  };
+
   return (
     <>
       {newTodoVisible ? (
@@ -70,6 +75,14 @@ const CreateTodo = ({ onCreate }: Props) => {
               >
                 {dDayText()}
               </DDayText>
+              <Image
+                src='/images/icons/x.svg'
+                width={20}
+                height={20}
+                alt='x'
+                style={{ cursor: "pointer" }}
+                onClick={handleClose}
+              />
             </div>
             <div
               style={{
