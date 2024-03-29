@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 type Props = {
   children: any;
-  onClick: () => void;
+  onClick?: () => void;
 };
 
 const Button = ({ children, onClick }: Props) => {

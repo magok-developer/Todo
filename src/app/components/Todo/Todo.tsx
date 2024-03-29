@@ -7,31 +7,6 @@ import { useRef, useState } from "react";
 import TodoItem from "./Components/TodoItem";
 import CreateTodo from "./Components/CreateTodo";
 
-var month = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "June",
-  "July",
-  "Aug",
-  "Sep",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-
-const week = [
-  "SUNDAY",
-  "MONDAY",
-  "TUESDAY",
-  "WEDNESDAY",
-  "THURSDAY",
-  "FRIDAY",
-  "SATURDAY",
-];
-
 const data = [
   {
     id: 1,
@@ -64,17 +39,14 @@ export type Todo = {
   isEditable: boolean;
 };
 
-export default function Todo() {
+type Props = {
+  todoMenuVisible: boolean;
+};
+
+export default function Todo({ todoMenuVisible }: Props) {
   const [todo, setTodo] = useState<Todo[]>(data);
-  const [menuVisible, setMenuVisible] = useState(false);
+
   const [filter, setFilter] = useState("all");
-
-  const today = new Date();
-
-  const formattedYear = `${today.getFullYear()} `;
-  const formattedMonth = `${month[today.getMonth()]}`;
-  const formattedDate = `${today.getDate()}`;
-  const formattedWeek = `${week[today.getDay()]}`;
 
   const nextId = useRef(4);
 
@@ -88,10 +60,6 @@ export default function Todo() {
 
   const handleClickDelete = (id: number) => {
     setTodo(todo.filter((item) => item.id !== id));
-  };
-
-  const handleClickMenu = () => {
-    setMenuVisible(!menuVisible);
   };
 
   const handleClickAll = () => {
@@ -155,47 +123,7 @@ export default function Todo() {
 
   return (
     <Container>
-      <Title>
-        <Image
-          src='/images/icons/menu.svg'
-          width={24}
-          height={24}
-          alt='menu'
-          onClick={handleClickMenu}
-          style={{ cursor: "pointer" }}
-        />
-        <Image
-          src='/images/icons/book.svg'
-          width={24}
-          height={24}
-          alt='book'
-          style={{ cursor: "pointer" }}
-        />
-        <DateWrap>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <div
-              style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-              }}
-            >
-              {formattedDate}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontSize: "12px", fontWeight: "bold" }}>
-                {formattedYear}
-              </span>
-              <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                {formattedMonth}
-              </span>
-            </div>
-          </div>
-          <span style={{ fontSize: "12px", fontWeight: "bold" }}>
-            {formattedWeek}
-          </span>
-        </DateWrap>
-      </Title>
-      {menuVisible && (
+      {todoMenuVisible && (
         <Menu>
           <MenuWrap>
             <div style={{ color: color.black, fontWeight: "bold" }}>
@@ -246,28 +174,6 @@ export default function Todo() {
 }
 
 const Container = styled.div``;
-
-const Title = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-  width: 512px;
-  background-color: ${color.white};
-  padding: 12px 30px;
-  box-sizing: border-box;
-
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
-`;
-
-const DateWrap = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
-
-  font-family: "Nunito", sans-serif;
-`;
 
 const Menu = styled.div`
   width: 512px;
