@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Diary } from "../Diary";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { color } from "@/styles/color";
+import DiaryEdit from "./DiaryEdit";
 
 type Props = {
   diaryId: number;
   diary: Diary[];
+  handleClickBack: () => void;
+  handleClickDelete: (id: number) => void;
 };
-const DiaryDetail = ({ diaryId, diary }: Props) => {
+const DiaryDetail = ({
+  diaryId,
+  diary,
+  handleClickBack,
+  handleClickDelete,
+}: Props) => {
   const selectedDiary = diary.find((diary) => diary.id === diaryId);
+  const [editVisible, setEditVisible] = useState(false);
+
+  const onClickDelete = () => {
+    handleClickBack();
+    handleClickDelete(diaryId);
+  };
+
+  const handleClickEdit = () => {
+    setEditVisible(true);
+  };
+
   return (
     <>
-      {selectedDiary && (
+      {selectedDiary && editVisible === false ? (
         <Wrap>
           <div
             style={{
@@ -51,6 +70,7 @@ const DiaryDetail = ({ diaryId, diary }: Props) => {
                 color: color.deepGray,
                 cursor: "pointer",
               }}
+              onClick={handleClickBack}
             >
               이전
             </div>
@@ -61,6 +81,7 @@ const DiaryDetail = ({ diaryId, diary }: Props) => {
                 color: color.white,
                 cursor: "pointer",
               }}
+              onClick={handleClickEdit}
             >
               수정
             </div>
@@ -71,11 +92,15 @@ const DiaryDetail = ({ diaryId, diary }: Props) => {
                 color: color.white,
                 cursor: "pointer",
               }}
+              onClick={onClickDelete}
             >
               삭제
             </div>
           </div>
         </Wrap>
+      ) : (
+        selectedDiary &&
+        editVisible && <DiaryEdit selectedDiary={selectedDiary} />
       )}
     </>
   );
@@ -108,6 +133,7 @@ const Wrap = styled.div`
 const Content = styled.div`
   background: ${color.gray};
   height: 219px;
+  padding: 10px;
 
   overflow-y: auto;
   margin-top: 12px;
