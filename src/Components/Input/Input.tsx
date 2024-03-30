@@ -8,7 +8,7 @@ type INPUT_STYLE_PROPS = {
 
 type Props = INPUT_STYLE_PROPS & {
   value?: string;
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
   style?: React.CSSProperties;
 };
 
