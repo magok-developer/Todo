@@ -6,7 +6,7 @@ import DiaryItem from "./components/DiaryItem";
 const data = [
   {
     id: 1,
-    title: "제목제목",
+    title: "첫번째",
     content:
       "내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용",
     date: "2024.03.22",
@@ -14,14 +14,14 @@ const data = [
   },
   {
     id: 2,
-    title: "제목제목",
+    title: "두번째",
     content: "내용내용",
     date: "2024.03.22",
     icon: "/images/battery/half_green.svg",
   },
   {
     id: 3,
-    title: "제목제목",
+    title: "세번째",
     content: "내용내용",
     date: "2024.03.22",
     icon: "/images/battery/full_green.svg",
@@ -66,10 +66,15 @@ export type Diary = {
 
 const Diary = () => {
   const [diary, setDiary] = useState<Diary[]>(data);
+
+  const handleClickDelete = (id: number) => {
+    setDiary(diary.filter((item) => item.id !== id));
+  };
+
   return (
     <>
       <Content>
-        <DiaryItem diary={diary} />
+        <DiaryItem diary={diary} handleClickDelete={handleClickDelete} />
       </Content>
     </>
   );

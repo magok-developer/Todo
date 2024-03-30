@@ -8,9 +8,10 @@ import DiaryDetail from "./DiaryDetail";
 
 type Props = {
   diary: Diary[];
+  handleClickDelete: (id: number) => void;
 };
 
-const DiaryItem = ({ diary }: Props) => {
+const DiaryItem = ({ diary, handleClickDelete }: Props) => {
   const [detailVisible, setDetailVisible] = useState<number | null>(null);
 
   const handleClickDetail = (id: number) => {
@@ -28,6 +29,7 @@ const DiaryItem = ({ diary }: Props) => {
           diaryId={detailVisible}
           diary={diary}
           handleClickBack={handleClickBack}
+          handleClickDelete={handleClickDelete}
         />
       ) : (
         <DiaryList>
@@ -38,13 +40,6 @@ const DiaryItem = ({ diary }: Props) => {
             >
               <div>{item.date}</div>
               <div className='title'>{item.title}</div>
-              <Image
-                src='/images/icons/delete.svg'
-                width={20}
-                height={20}
-                alt='delete'
-                className='icon'
-              />
             </Wrap>
           ))}
           <Button>+ New Diary</Button>
@@ -88,7 +83,7 @@ const Wrap = styled.div`
   padding: 30px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 140px;
   cursor: pointer;
 
   font-size: 14px;
