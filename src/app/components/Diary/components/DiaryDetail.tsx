@@ -7,8 +7,9 @@ import { color } from "@/styles/color";
 type Props = {
   diaryId: number;
   diary: Diary[];
+  handleClickBack: () => void;
 };
-const DiaryDetail = ({ diaryId, diary }: Props) => {
+const DiaryDetail = ({ diaryId, diary, handleClickBack }: Props) => {
   const selectedDiary = diary.find((diary) => diary.id === diaryId);
   return (
     <>
@@ -51,6 +52,7 @@ const DiaryDetail = ({ diaryId, diary }: Props) => {
                 color: color.deepGray,
                 cursor: "pointer",
               }}
+              onClick={handleClickBack}
             >
               이전
             </div>
@@ -108,6 +110,7 @@ const Wrap = styled.div`
 const Content = styled.div`
   background: ${color.gray};
   height: 219px;
+  padding: 10px;
 
   overflow-y: auto;
   margin-top: 12px;

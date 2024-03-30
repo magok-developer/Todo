@@ -17,10 +17,18 @@ const DiaryItem = ({ diary }: Props) => {
     setDetailVisible(id);
   };
 
+  const handleClickBack = () => {
+    setDetailVisible(null);
+  };
+
   return (
     <Container>
       {detailVisible !== null ? (
-        <DiaryDetail diaryId={detailVisible} diary={diary} />
+        <DiaryDetail
+          diaryId={detailVisible}
+          diary={diary}
+          handleClickBack={handleClickBack}
+        />
       ) : (
         <DiaryList>
           {diary.map((item, index) => (
