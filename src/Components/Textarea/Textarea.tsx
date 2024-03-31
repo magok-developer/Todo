@@ -4,12 +4,13 @@ import styled from "@emotion/styled";
 type Props = {
   value: string;
   style?: React.CSSProperties;
+  onChange: (e: any) => void;
 };
 
-const Textarea = ({ value, style }: Props) => {
+const Textarea = ({ value, style, onChange }: Props) => {
   return (
     <>
-      <TextareaStyle value={value} style={style} />
+      <TextareaStyle value={value} style={style} onChange={onChange} />
     </>
   );
 };
@@ -26,6 +27,8 @@ const TextareaStyle = styled.textarea`
   outline: none;
 
   box-sizing: border-box;
+
+  resize: none;
   ::-webkit-scrollbar {
     width: 6px; /* 스크롤바의 너비 */
   }

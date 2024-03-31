@@ -47,6 +47,9 @@ export default function Home() {
     setTodoMenuVisible(!todoMenuVisible);
   };
 
+  const handleClickDiaryMenu = () => {
+    setDiaryMenuVisible(!diaryMenuVisible);
+  };
   const handleClickMode = () => {
     setMode(!mode);
   };
@@ -58,7 +61,7 @@ export default function Home() {
           width={24}
           height={24}
           alt='menu'
-          onClick={handleClickMenu}
+          onClick={mode ? handleClickDiaryMenu : handleClickMenu}
           style={{ cursor: "pointer" }}
         />
         <Image
@@ -93,7 +96,11 @@ export default function Home() {
           </span>
         </DateWrap>
       </Title>
-      {mode ? <Diary /> : <Todo todoMenuVisible={todoMenuVisible} />}
+      {mode ? (
+        <Diary diaryMenuVisible={diaryMenuVisible} />
+      ) : (
+        <Todo todoMenuVisible={todoMenuVisible} />
+      )}
     </Container>
   );
 }

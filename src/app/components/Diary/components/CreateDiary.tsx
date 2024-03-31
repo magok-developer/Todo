@@ -1,17 +1,12 @@
-import { useState } from "react";
-import { Diary } from "../Diary";
+import Calender from "@/Components/Calendar/Calender";
 import Input from "@/Components/Input/Input";
-import { color } from "@/styles/color";
 import Textarea from "@/Components/Textarea/Textarea";
+import useChangeDateRange from "@/hook/useChangeDateRange";
+import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Calender from "@/Components/Calendar/Calender";
-import useChangeDateRange from "@/hook/useChangeDateRange";
-
-type Props = {
-  selectedDiary: Diary;
-  setEditVisible: any;
-};
+import Link from "next/link";
+import React, { useState } from "react";
 
 const icons = [
   {
@@ -36,26 +31,23 @@ const icons = [
   },
 ];
 
-const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
+type Props = {
+  setCreateVisible: any;
+};
+const CreateDiary = ({ setCreateVisible }: Props) => {
   const { date, onChange: onChangeDate } = useChangeDateRange();
-  const [newDiary, setNewDiary] = useState<Diary>(selectedDiary);
-  const [input, setInput] = useState(selectedDiary.title);
-  const [textarea, setTextarea] = useState(selectedDiary.content);
+  const [input, setInput] = useState("");
+  const [textarea, setTextarea] = useState("");
 
   const handleChangeInput = (e: any) => {
-    setNewDiary({ ...newDiary, title: e.target.value });
     setInput(e.target.value);
   };
 
   const handleChangeTextarea = (e: any) => {
-    setNewDiary({ ...newDiary, content: e.target.value });
     setTextarea(e.target.value);
   };
 
-  const handleClickSave = () => {
-    setEditVisible(false);
-  };
-
+  const handleClickSave = () => {};
   return (
     <Container>
       <div
@@ -71,9 +63,7 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
           {icons.map((item, index) => (
             <Image
               key={index}
-              src={
-                selectedDiary.icon === item.choice ? item.choice : item.common
-              }
+              src={item.common}
               width={24}
               height={24}
               alt='battery'
@@ -112,10 +102,11 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
             color: color.deepGray,
             cursor: "pointer",
           }}
-          onClick={() => setEditVisible(false)}
+          onClick={() => setCreateVisible(false)}
         >
           이전
         </div>
+
         <div
           className='button'
           style={{
@@ -132,7 +123,7 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
   );
 };
 
-export default DiaryEdit;
+export default CreateDiary;
 
 const Container = styled.div`
   padding: 24px;
