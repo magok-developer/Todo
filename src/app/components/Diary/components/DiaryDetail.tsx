@@ -100,7 +100,12 @@ const DiaryDetail = ({
         </Wrap>
       ) : (
         selectedDiary &&
-        editVisible && <DiaryEdit selectedDiary={selectedDiary} />
+        editVisible && (
+          <DiaryEdit
+            selectedDiary={selectedDiary}
+            setEditVisible={setEditVisible}
+          />
+        )
       )}
     </>
   );
