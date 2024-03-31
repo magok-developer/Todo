@@ -93,6 +93,7 @@ const Diary = ({ diaryMenuVisible }: Props) => {
       setFilter("old");
     }
   };
+
   return (
     <>
       {diaryMenuVisible && (

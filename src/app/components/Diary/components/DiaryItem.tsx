@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import { color } from "@/styles/color";
 import Button from "@/Components/Button/Button";
 import DiaryDetail from "./DiaryDetail";
+import { create } from "domain";
+import CreateDiary from "./CreateDiary";
 
 type Props = {
   diary: Diary[];
@@ -13,6 +15,7 @@ type Props = {
 
 const DiaryItem = ({ diary, handleClickDelete }: Props) => {
   const [detailVisible, setDetailVisible] = useState<number | null>(null);
+  const [createVisible, setCreateVisible] = useState(false);
 
   const handleClickDetail = (id: number) => {
     setDetailVisible(id);
@@ -21,6 +24,12 @@ const DiaryItem = ({ diary, handleClickDelete }: Props) => {
   const handleClickBack = () => {
     setDetailVisible(null);
   };
+
+  const handleClickCreate = () => {
+    setCreateVisible(true);
+  };
+
+  console.log(createVisible);
 
   return (
     <Container>
@@ -31,6 +40,8 @@ const DiaryItem = ({ diary, handleClickDelete }: Props) => {
           handleClickBack={handleClickBack}
           handleClickDelete={handleClickDelete}
         />
+      ) : createVisible ? (
+        <CreateDiary setCreateVisible={setCreateVisible} />
       ) : (
         <DiaryList>
           {diary.map((item, index) => (
@@ -42,7 +53,7 @@ const DiaryItem = ({ diary, handleClickDelete }: Props) => {
               <div className='title'>{item.title}</div>
             </Wrap>
           ))}
-          <Button>+ New Diary</Button>
+          <Button onClick={handleClickCreate}>+ New Diary</Button>
         </DiaryList>
       )}
     </Container>
