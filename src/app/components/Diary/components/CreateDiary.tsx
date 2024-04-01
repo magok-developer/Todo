@@ -2,52 +2,67 @@ import Calender from "@/Components/Calendar/Calender";
 import Input from "@/Components/Input/Input";
 import Textarea from "@/Components/Textarea/Textarea";
 import useChangeDateRange from "@/hook/useChangeDateRange";
+import { useDiaryStore } from "@/store/diary.store";
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
+import { icons } from "../../../../../public/static/icons";
 
-const icons = [
-  {
-    common: "/images/battery/charge.svg",
-    choice: "/images/battery/charge_green.svg",
-  },
-  {
-    common: "/images/battery/one.svg",
-    choice: "/images/battery/one_green.svg",
-  },
-  {
-    common: "/images/battery/half.svg",
-    choice: "/images/battery/half_green.svg",
-  },
-  {
-    common: "/images/battery/full.svg",
-    choice: "/images/battery/full_green.svg",
-  },
-  {
-    common: "/images/battery/empty.svg",
-    choice: "/images/battery/empty_green.svg",
-  },
-];
-
-type Props = {
-  setCreateVisible: any;
-};
-const CreateDiary = ({ setCreateVisible }: Props) => {
+const CreateDiary = () => {
   const { date, onChange: onChangeDate } = useChangeDateRange();
-  const [input, setInput] = useState("");
-  const [textarea, setTextarea] = useState("");
+  const [icon, setIcon] = useState(-1);
+
+  const {
+    inputValue,
+    setInputValue,
+    textareaValue,
+    setTextareaValue,
+    setCreateVisible,
+    handleClickCreate,
+  } = useDiaryStore();
 
   const handleChangeInput = (e: any) => {
-    setInput(e.target.value);
+    setInputValue(e.target.value);
   };
 
   const handleChangeTextarea = (e: any) => {
-    setTextarea(e.target.value);
+    setTextareaValue(e.target.value);
   };
 
-  const handleClickSave = () => {};
+  const formatDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+  const handleClickIcon = (index: number) => {
+    if (icon === index) {
+      setIcon(-1);
+    } else {
+      setIcon(index);
+    }
+  };
+
+  const handleClickSave = () => {
+    if (inputValue.trim() === "" || textareaValue.trim() === "") {
+      return;
+    } else {
+      setCreateVisible(false);
+      const formattedDate = formatDate(date.date);
+      const iconSrc = icon !== -1 ? icons[icon].choice : "";
+      handleClickCreate(inputValue, textareaValue, formattedDate, iconSrc);
+      setInputValue("");
+      setTextareaValue("");
+    }
+  };
+
+  const handleClickPrevious = () => {
+    setIcon(-1);
+    setCreateVisible(false);
+  };
+
   return (
     <Container>
       <div
@@ -63,26 +78,29 @@ const CreateDiary = ({ setCreateVisible }: Props) => {
           {icons.map((item, index) => (
             <Image
               key={index}
-              src={item.common}
+              src={icon === index ? item.choice : item.common}
               width={24}
               height={24}
               alt='battery'
+              onClick={() => handleClickIcon(index)}
+              style={{ cursor: "pointer" }}
             />
           ))}
         </div>
         <Calender onChange={onChangeDate} date={date.date} />
       </div>
       <Input
-        value={input}
+        value={inputValue}
         style={{
           background: color.gray,
           border: `1px solid ${color.gray}`,
           width: "100%",
+          padding: "0px 10px",
         }}
         onChange={handleChangeInput}
       />
       <Textarea
-        value={textarea}
+        value={textareaValue}
         style={{ width: "100%", marginTop: "12px" }}
         onChange={handleChangeTextarea}
       />
@@ -102,7 +120,7 @@ const CreateDiary = ({ setCreateVisible }: Props) => {
             color: color.deepGray,
             cursor: "pointer",
           }}
-          onClick={() => setCreateVisible(false)}
+          onClick={handleClickPrevious}
         >
           이전
         </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Diary } from "../Diary";
+
 import Input from "@/Components/Input/Input";
 import { color } from "@/styles/color";
 import Textarea from "@/Components/Textarea/Textarea";
@@ -7,40 +7,26 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Calender from "@/Components/Calendar/Calender";
 import useChangeDateRange from "@/hook/useChangeDateRange";
+import { DiaryType, useDiaryStore } from "@/store/diary.store";
+import { icons } from "../../../../../public/static/icons";
 
 type Props = {
-  selectedDiary: Diary;
-  setEditVisible: any;
+  selectedDiary: DiaryType;
 };
 
-const icons = [
-  {
-    common: "/images/battery/charge.svg",
-    choice: "/images/battery/charge_green.svg",
-  },
-  {
-    common: "/images/battery/one.svg",
-    choice: "/images/battery/one_green.svg",
-  },
-  {
-    common: "/images/battery/half.svg",
-    choice: "/images/battery/half_green.svg",
-  },
-  {
-    common: "/images/battery/full.svg",
-    choice: "/images/battery/full_green.svg",
-  },
-  {
-    common: "/images/battery/empty.svg",
-    choice: "/images/battery/empty_green.svg",
-  },
-];
-
-const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
+const DiaryEdit = ({ selectedDiary }: Props) => {
   const { date, onChange: onChangeDate } = useChangeDateRange();
-  const [newDiary, setNewDiary] = useState<Diary>(selectedDiary);
+  const [newDiary, setNewDiary] = useState<DiaryType>(selectedDiary);
   const [input, setInput] = useState(selectedDiary.title);
   const [textarea, setTextarea] = useState(selectedDiary.content);
+
+  const iconIndex = icons.findIndex(
+    (item) => item.choice === selectedDiary.icon
+  );
+
+  const [icon, setIcon] = useState(iconIndex);
+
+  const { setEditVisible, diaries, setDiaries } = useDiaryStore();
 
   const handleChangeInput = (e: any) => {
     setNewDiary({ ...newDiary, title: e.target.value });
@@ -52,7 +38,44 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
     setTextarea(e.target.value);
   };
 
+  const formatDate = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}.${month}.${day}`;
+  };
+
+  const handleClickIcon = (index: number) => {
+    if (icon === index) {
+      setIcon(-1);
+    } else {
+      setIcon(index);
+    }
+  };
+
   const handleClickSave = () => {
+    const formattedDate = formatDate(date.date);
+    const updatedIcon = icon !== -1 ? icons[icon].choice : selectedDiary.icon;
+    const updatedDiary = {
+      ...selectedDiary,
+      title: newDiary.title,
+      content: newDiary.content,
+      date: formattedDate,
+      icon: updatedIcon,
+    };
+
+    const updatedDiaries = diaries.map((diary) =>
+      diary.id === selectedDiary.id ? updatedDiary : diary
+    );
+
+    setDiaries(updatedDiaries);
+    setEditVisible(false);
+  };
+
+  const handleClickPrevious = () => {
+    setNewDiary(selectedDiary);
+
+    setIcon(iconIndex);
     setEditVisible(false);
   };
 
@@ -71,12 +94,12 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
           {icons.map((item, index) => (
             <Image
               key={index}
-              src={
-                selectedDiary.icon === item.choice ? item.choice : item.common
-              }
+              src={icon === index ? item.choice : item.common}
               width={24}
               height={24}
               alt='battery'
+              onClick={() => handleClickIcon(index)}
+              style={{ cursor: "pointer" }}
             />
           ))}
         </div>
@@ -88,6 +111,7 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
           background: color.gray,
           border: `1px solid ${color.gray}`,
           width: "100%",
+          padding: "0px 10px",
         }}
         onChange={handleChangeInput}
       />
@@ -112,7 +136,7 @@ const DiaryEdit = ({ selectedDiary, setEditVisible }: Props) => {
             color: color.deepGray,
             cursor: "pointer",
           }}
-          onClick={() => setEditVisible(false)}
+          onClick={handleClickPrevious}
         >
           이전
         </div>
