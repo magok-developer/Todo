@@ -19,7 +19,7 @@ export default Textarea;
 
 const TextareaStyle = styled.textarea`
   height: 180px;
-
+  border-radius: 6px;
   padding: 10px;
 
   background-color: ${color.gray};
