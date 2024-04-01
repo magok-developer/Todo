@@ -1,24 +1,17 @@
 import styled from "@emotion/styled";
 import Image from "next/image";
-import { Todo } from "../Todo";
 import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
+import useTodoStore, { TodoType } from "@/store/todo.store";
 
 type Props = {
-  todo: Todo[];
-  handleClickCheck: (id: number) => void;
-  handleClickDelete: (id: number) => void;
-  handleClickEdit: (id: number) => void;
-  handleChange: (id: number, e: any) => void;
+  todos: TodoType[];
 };
 
-const TodoItem = ({
-  todo,
-  handleClickCheck,
-  handleClickDelete,
-  handleClickEdit,
-  handleChange,
-}: Props) => {
+const TodoItem = ({ todos }: Props) => {
+  const { handleClickCheck, handleClickDelete, handleClickEdit, handleChange } =
+    useTodoStore();
+
   const calculateDday = (targetDate: string): number => {
     const today = new Date();
     const target = new Date(targetDate);
@@ -46,7 +39,7 @@ const TodoItem = ({
 
   return (
     <Container>
-      {todo.map((item, index) => (
+      {todos.map((item, index) => (
         <ContentWrap key={`${item.id}_${index}`}>
           <Image
             src={

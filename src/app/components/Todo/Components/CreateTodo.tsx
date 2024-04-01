@@ -2,17 +2,15 @@ import Button from "@/Components/Button/Button";
 import Calender from "@/Components/Calendar/Calender";
 import Input from "@/Components/Input/Input";
 import useChangeDateRange from "@/hook/useChangeDateRange";
+import useTodoStore from "@/store/todo.store";
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
 
 import { useEffect, useState } from "react";
 
-type Props = {
-  onCreate: (text: string, date: string) => void;
-};
-
-const CreateTodo = ({ onCreate }: Props) => {
+const CreateTodo = () => {
+  const { createTodo } = useTodoStore();
   const { date, onChange: onChangeDate } = useChangeDateRange();
   const [newTodoVisible, setNewTodoVisible] = useState(false);
   const [input, setInput] = useState("");
@@ -33,7 +31,7 @@ const CreateTodo = ({ onCreate }: Props) => {
       return;
     } else {
       setNewTodoVisible(false);
-      onCreate(input, date.date.toISOString());
+      createTodo(input, date.date.toISOString());
       setInput("");
     }
   };

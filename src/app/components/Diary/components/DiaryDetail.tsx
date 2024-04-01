@@ -1,24 +1,23 @@
-import React, { useState } from "react";
-import { Diary } from "../Diary";
+import React from "react";
 import Image from "next/image";
 import styled from "@emotion/styled";
 import { color } from "@/styles/color";
 import DiaryEdit from "./DiaryEdit";
+import { useDiaryStore } from "@/store/diary.store";
 
 type Props = {
   diaryId: number;
-  diary: Diary[];
-  handleClickBack: () => void;
-  handleClickDelete: (id: number) => void;
 };
-const DiaryDetail = ({
-  diaryId,
-  diary,
-  handleClickBack,
-  handleClickDelete,
-}: Props) => {
-  const selectedDiary = diary.find((diary) => diary.id === diaryId);
-  const [editVisible, setEditVisible] = useState(false);
+const DiaryDetail = ({ diaryId }: Props) => {
+  const {
+    editVisible,
+    setEditVisible,
+    handleClickDelete,
+    setDetailVisible,
+    diaries,
+  } = useDiaryStore();
+
+  const selectedDiary = diaries.find((diary) => diary.id === diaryId);
 
   const onClickDelete = () => {
     handleClickBack();
@@ -27,6 +26,10 @@ const DiaryDetail = ({
 
   const handleClickEdit = () => {
     setEditVisible(true);
+  };
+
+  const handleClickBack = () => {
+    setDetailVisible(null);
   };
 
   return (
@@ -100,12 +103,7 @@ const DiaryDetail = ({
         </Wrap>
       ) : (
         selectedDiary &&
-        editVisible && (
-          <DiaryEdit
-            selectedDiary={selectedDiary}
-            setEditVisible={setEditVisible}
-          />
-        )
+        editVisible && <DiaryEdit selectedDiary={selectedDiary} />
       )}
     </>
   );

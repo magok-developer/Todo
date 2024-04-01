@@ -1,56 +1,44 @@
-import React, { useState } from "react";
-import { Diary } from "../Diary";
-import Image from "next/image";
 import styled from "@emotion/styled";
 import { color } from "@/styles/color";
 import Button from "@/Components/Button/Button";
 import DiaryDetail from "./DiaryDetail";
-import { create } from "domain";
 import CreateDiary from "./CreateDiary";
+import { useDiaryStore } from "@/store/diary.store";
+import Image from "next/image";
 
-type Props = {
-  diary: Diary[];
-  handleClickDelete: (id: number) => void;
-};
-
-const DiaryItem = ({ diary, handleClickDelete }: Props) => {
-  const [detailVisible, setDetailVisible] = useState<number | null>(null);
-  const [createVisible, setCreateVisible] = useState(false);
+const DiaryItem = () => {
+  const {
+    diaries,
+    setDetailVisible,
+    setCreateVisible,
+    detailVisible,
+    createVisible,
+  } = useDiaryStore();
 
   const handleClickDetail = (id: number) => {
     setDetailVisible(id);
-  };
-
-  const handleClickBack = () => {
-    setDetailVisible(null);
   };
 
   const handleClickCreate = () => {
     setCreateVisible(true);
   };
 
-  console.log(createVisible);
-
   return (
     <Container>
       {detailVisible !== null ? (
-        <DiaryDetail
-          diaryId={detailVisible}
-          diary={diary}
-          handleClickBack={handleClickBack}
-          handleClickDelete={handleClickDelete}
-        />
+        <DiaryDetail diaryId={detailVisible} />
       ) : createVisible ? (
-        <CreateDiary setCreateVisible={setCreateVisible} />
+        <CreateDiary />
       ) : (
         <DiaryList>
-          {diary.map((item, index) => (
+          {diaries.map((item, index) => (
             <Wrap
               key={`${item.id}_${index}`}
               onClick={() => handleClickDetail(item.id)}
             >
               <div>{item.date}</div>
               <div className='title'>{item.title}</div>
+              <Image src={item.icon} width={20} height={20} alt='icon' />
             </Wrap>
           ))}
           <Button onClick={handleClickCreate}>+ New Diary</Button>
@@ -94,7 +82,7 @@ const Wrap = styled.div`
   padding: 30px;
   display: flex;
   align-items: center;
-  gap: 140px;
+  justify-content: space-between;
   cursor: pointer;
 
   font-size: 14px;
