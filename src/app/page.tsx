@@ -106,7 +106,7 @@ export default function Home() {
 }
 
 const Container = styled.div`
-  margin-top: 10px;
+  margin-top: 40px;
 `;
 
 const Title = styled.div`
