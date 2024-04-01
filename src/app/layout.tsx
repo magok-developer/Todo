@@ -1,7 +1,6 @@
+import "@/styles/global.css";
 import { color } from "@/styles/color";
 import type { Metadata } from "next";
-
-// import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -21,6 +20,9 @@ export default function RootLayout({
           display: "flex",
 
           justifyContent: "center",
+
+          overflow: "hidden",
+          height: "100vh",
         }}
       >
         {children}
