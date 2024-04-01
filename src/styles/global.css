@@ -1,1 +1,28 @@
 @import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Gothic+Coding:wght@400;700&family=Nanum+Gothic:wght@400;800&family=Noto+Sans+KR:wght@300&family=Nunito:wght@200;400&family=Roboto:wght@300&display=swap");
+
+@font-face {
+  font-family: "Spoqa Han sans Neo";
+  font-weight: 300;
+  src: url("/fonts/SpoqaHanSansNeo-Light.woff2") format("woff2"),
+    url("/fonts/SpoqaHanSansNeo-Light.woff2") format("woff"),
+    url("/fonts/SpoqaHanSansNeo-Light.woff2") format("truetype");
+}
+
+@font-face {
+  font-family: "Spoqa Han sans Neo";
+  font-weight: 400;
+  src: url("/fonts/SpoqaHanSansNeo-Regular.woff2") format("woff2"),
+    url("/fonts/SpoqaHanSansNeo-Regular.woff2") format("woff"),
+    url("/fonts/SpoqaHanSansNeo-Regular.woff2") format("truetype");
+}
+@font-face {
+  font-family: "Spoqa Han sans Neo";
+  font-weight: 500;
+  src: url("/fonts/SpoqaHanSansNeo-Medium.woff2") format("woff2");
+}
+
+body,
+textarea,
+input {
+  font-family: "Spoqa Han sans Neo";
+}
