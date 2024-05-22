@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 import { todoData } from "../../public/data/dummyData";
 
 export type TodoType = {
