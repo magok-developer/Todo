@@ -1,6 +1,6 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
-import { InputHTMLAttributes } from "react";
+import { forwardRef } from "react";
 
 type INPUT_STYLE_PROPS = {
   mode?: "small" | "medium";
@@ -10,13 +10,23 @@ type Props = INPUT_STYLE_PROPS & {
   value?: string;
   onChange?: (e: any) => void;
   style?: React.CSSProperties;
+  onKeyPress?: (e: any) => void;
 };
 
-const Input = ({ value, onChange, mode = "medium", style }: Props) => {
-  return (
-    <InputStyle mode-={mode} value={value} onChange={onChange} style={style} />
-  );
-};
+const Input = forwardRef<HTMLInputElement, Props>(
+  ({ mode = "medium", value, onChange, style, onKeyPress }, ref) => {
+    return (
+      <InputStyle
+        mode-={mode}
+        ref={ref}
+        value={value}
+        onChange={onChange}
+        onKeyPress={onKeyPress}
+        style={style}
+      />
+    );
+  }
+);
 
 export default Input;
 

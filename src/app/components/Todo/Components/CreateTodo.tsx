@@ -24,7 +24,7 @@ const CreateTodo = () => {
     setInput(e.target.value);
   };
 
-  const handleClick = () => {
+  const handleClick = (e: any) => {
     if (input.trim() === "") {
       return;
     } else if (dDay < 0) {
@@ -33,6 +33,12 @@ const CreateTodo = () => {
       setNewTodoVisible(false);
       createTodo(input, date.date.toISOString());
       setInput("");
+    }
+  };
+
+  const handleOnkeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleClick(e);
     }
   };
 
@@ -93,6 +99,7 @@ const CreateTodo = () => {
               <Input
                 value={input}
                 onChange={handleChange}
+                onKeyPress={handleOnkeyPress}
                 style={{ width: "380px" }}
               />
               <div className='button' onClick={handleClick}>
@@ -134,7 +141,6 @@ const Wrap = styled.div`
     font-size: 20px;
     font-weight: bold;
     color: ${color.white};
-    padding-bottom: 4px;
 
     display: flex;
     justify-content: center;
@@ -148,6 +154,8 @@ const Wrap = styled.div`
 `;
 
 const DDayText = styled.div<{ color: string }>`
+  display: flex;
+  align-items: center;
   width: 300px;
   color: ${({ color }) => color};
   font-weight: bold;

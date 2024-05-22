@@ -3,6 +3,8 @@ import Image from "next/image";
 import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
 import useTodoStore, { TodoType } from "@/store/todo.store";
+import { useEffect, useRef } from "react";
+import ShowAlert from "@/Components/Alert/Alert";
 
 type Props = {
   todos: TodoType[];
@@ -11,6 +13,22 @@ type Props = {
 const TodoItem = ({ todos }: Props) => {
   const { handleClickCheck, handleClickDelete, handleClickEdit, handleChange } =
     useTodoStore();
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleOutSideClick = (e: MouseEvent): void => {
+      inputRefs.current.forEach((ref, index) => {
+        if (ref && !ref.contains(e.target as Node)) {
+          handleClickEdit(todos[index].id);
+        }
+      });
+    };
+
+    document.addEventListener("mousedown", handleOutSideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, [inputRefs, todos, handleClickEdit]);
 
   const calculateDday = (targetDate: string): number => {
     const today = new Date();
@@ -37,6 +55,19 @@ const TodoItem = ({ todos }: Props) => {
     }
   };
 
+  const handleOnkeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleClickEdit(e);
+    }
+  };
+
+  const onClickDelete = (id: number) => {
+    ShowAlert({
+      handleClickDelete,
+      id: id,
+    });
+  };
+
   return (
     <Container>
       {todos.map((item, index) => (
@@ -59,6 +90,8 @@ const TodoItem = ({ todos }: Props) => {
               value={item.todo}
               onChange={(e) => handleChange(item.id, e)}
               style={{ width: "200px", textAlign: "center" }}
+              onKeyPress={handleOnkeyPress}
+              ref={(el: any) => (inputRefs.current[index] = el)}
             />
           ) : (
             <div className={item.checked ? "checked" : "common"}>
@@ -90,7 +123,7 @@ const TodoItem = ({ todos }: Props) => {
                 width={16}
                 height={16}
                 alt='edit'
-                onClick={() => handleClickDelete(item.id)}
+                onClick={() => onClickDelete(item.id)}
               />
             </div>
           </div>
