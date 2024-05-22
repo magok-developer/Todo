@@ -5,10 +5,11 @@ import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 type Props = {
   handleClickDelete: (id: number) => void;
-  todoId: number;
+  id: number;
+  handleClickBack?: () => void;
 };
 
-const ShowAlert = ({ handleClickDelete, todoId }: Props) => {
+const ShowAlert = ({ handleClickDelete, id, handleClickBack }: Props) => {
   confirmAlert({
     customUI: ({ onClose }) => {
       return (
@@ -19,7 +20,10 @@ const ShowAlert = ({ handleClickDelete, todoId }: Props) => {
               <Button
                 className='yes'
                 onClick={() => {
-                  handleClickDelete(todoId);
+                  handleClickDelete(id);
+                  if (handleClickBack) {
+                    handleClickBack();
+                  }
                   onClose();
                 }}
               >

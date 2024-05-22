@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { color } from "@/styles/color";
 import DiaryEdit from "./DiaryEdit";
 import { useDiaryStore } from "@/store/diary.store";
+import ShowAlert from "@/Components/Alert/Alert";
 
 type Props = {
   diaryId: number;
@@ -19,17 +20,20 @@ const DiaryDetail = ({ diaryId }: Props) => {
 
   const selectedDiary = diaries.find((diary) => diary.id === diaryId);
 
-  const onClickDelete = () => {
-    handleClickBack();
-    handleClickDelete(diaryId);
+  const handleClickBack = () => {
+    setDetailVisible(null);
+  };
+
+  const onClickDelete = (diaryId: number) => {
+    ShowAlert({
+      handleClickDelete,
+      handleClickBack,
+      id: diaryId,
+    });
   };
 
   const handleClickEdit = () => {
     setEditVisible(true);
-  };
-
-  const handleClickBack = () => {
-    setDetailVisible(null);
   };
 
   return (
@@ -95,7 +99,7 @@ const DiaryDetail = ({ diaryId }: Props) => {
                 color: color.white,
                 cursor: "pointer",
               }}
-              onClick={onClickDelete}
+              onClick={() => onClickDelete(diaryId)}
             >
               삭제
             </div>

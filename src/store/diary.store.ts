@@ -37,7 +37,7 @@ type DiaryStore = {
 export const useDiaryStore = create<DiaryStore>((set) => ({
   diaries: diaryData,
   filter: "",
-  nextId: { current: 10 },
+  nextId: { current: diaryData.map((diary) => diary.id).length + 1 },
   detailVisible: null,
   createVisible: false,
   editVisible: false,

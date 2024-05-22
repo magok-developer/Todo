@@ -3,7 +3,7 @@ import Image from "next/image";
 import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
 import useTodoStore, { TodoType } from "@/store/todo.store";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import ShowAlert from "@/Components/Alert/Alert";
 
 type Props = {
@@ -64,7 +64,7 @@ const TodoItem = ({ todos }: Props) => {
   const onClickDelete = (id: number) => {
     ShowAlert({
       handleClickDelete,
-      todoId: id,
+      id: id,
     });
   };
 
