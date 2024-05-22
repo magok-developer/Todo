@@ -3,9 +3,9 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 
-import TodoItem from "./components/TodoItem";
-import CreateTodo from "./components/CreateTodo";
 import useTodoStore, { TodoType } from "@/store/todo.store";
+import TodoItem from "./Components/TodoItem";
+import CreateTodo from "./Components/CreateTodo";
 
 type Props = {
   todoMenuVisible: boolean;
