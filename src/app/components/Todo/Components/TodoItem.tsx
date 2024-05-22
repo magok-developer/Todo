@@ -3,6 +3,7 @@ import Image from "next/image";
 import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
 import useTodoStore, { TodoType } from "@/store/todo.store";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   todos: TodoType[];
@@ -11,6 +12,22 @@ type Props = {
 const TodoItem = ({ todos }: Props) => {
   const { handleClickCheck, handleClickDelete, handleClickEdit, handleChange } =
     useTodoStore();
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  useEffect(() => {
+    const handleOutSideClick = (e: MouseEvent): void => {
+      inputRefs.current.forEach((ref, index) => {
+        if (ref && !ref.contains(e.target as Node)) {
+          handleClickEdit(todos[index].id);
+        }
+      });
+    };
+
+    document.addEventListener("mousedown", handleOutSideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutSideClick);
+    };
+  }, [inputRefs, todos, handleClickEdit]);
 
   const calculateDday = (targetDate: string): number => {
     const today = new Date();
@@ -66,6 +83,7 @@ const TodoItem = ({ todos }: Props) => {
               onChange={(e) => handleChange(item.id, e)}
               style={{ width: "200px", textAlign: "center" }}
               onKeyPress={handleOnkeyPress}
+              ref={(el: any) => (inputRefs.current[index] = el)}
             />
           ) : (
             <div className={item.checked ? "checked" : "common"}>
