@@ -37,6 +37,12 @@ const TodoItem = ({ todos }: Props) => {
     }
   };
 
+  const handleOnkeyPress = (e: any) => {
+    if (e.key === "Enter") {
+      handleClickEdit(e);
+    }
+  };
+
   return (
     <Container>
       {todos.map((item, index) => (
@@ -59,6 +65,7 @@ const TodoItem = ({ todos }: Props) => {
               value={item.todo}
               onChange={(e) => handleChange(item.id, e)}
               style={{ width: "200px", textAlign: "center" }}
+              onKeyPress={handleOnkeyPress}
             />
           ) : (
             <div className={item.checked ? "checked" : "common"}>

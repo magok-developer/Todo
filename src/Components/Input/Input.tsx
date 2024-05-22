@@ -10,11 +10,24 @@ type Props = INPUT_STYLE_PROPS & {
   value?: string;
   onChange?: (e: any) => void;
   style?: React.CSSProperties;
+  onKeyPress?: (e: any) => void;
 };
 
-const Input = ({ value, onChange, mode = "medium", style }: Props) => {
+const Input = ({
+  value,
+  onChange,
+  onKeyPress,
+  mode = "medium",
+  style,
+}: Props) => {
   return (
-    <InputStyle mode-={mode} value={value} onChange={onChange} style={style} />
+    <InputStyle
+      mode-={mode}
+      value={value}
+      onChange={onChange}
+      onKeyPress={onKeyPress}
+      style={style}
+    />
   );
 };
 
