@@ -4,6 +4,7 @@ import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
 import useTodoStore, { TodoType } from "@/store/todo.store";
 import { useEffect, useRef, useState } from "react";
+import ShowAlert from "@/Components/Alert/Alert";
 
 type Props = {
   todos: TodoType[];
@@ -58,6 +59,13 @@ const TodoItem = ({ todos }: Props) => {
     if (e.key === "Enter") {
       handleClickEdit(e);
     }
+  };
+
+  const onClickDelete = (id: number) => {
+    ShowAlert({
+      handleClickDelete,
+      todoId: id,
+    });
   };
 
   return (
@@ -115,7 +123,7 @@ const TodoItem = ({ todos }: Props) => {
                 width={16}
                 height={16}
                 alt='edit'
-                onClick={() => handleClickDelete(item.id)}
+                onClick={() => onClickDelete(item.id)}
               />
             </div>
           </div>
