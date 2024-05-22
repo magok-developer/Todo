@@ -29,7 +29,7 @@ type TodoStore = {
 const useTodoStore = create<TodoStore>((set) => ({
   todos: todoData,
   filter: "all",
-  nextId: { current: 4 },
+  nextId: { current: todoData.map((todo) => todo.id).length + 1 },
   setTodos: (todos) => set({ todos }),
   setFilter: (filter) => set({ filter }),
   handleClickCheck: (id) =>
