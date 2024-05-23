@@ -7,7 +7,7 @@ import styled from "@emotion/styled";
 import Image from "next/image";
 import Calender from "@/Components/Calendar/Calender";
 import useChangeDateRange from "@/hook/useChangeDateRange";
-import { DiaryType, useDiaryStore } from "@/store/diary.store";
+import useDiaryStore, { DiaryType } from "@/store/diary.store";
 import { icons } from "../../../../../public/static/icons";
 
 type Props = {

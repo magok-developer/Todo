@@ -3,7 +3,7 @@ import Image from "next/image";
 import { color } from "@/styles/color";
 import Input from "@/Components/Input/Input";
 import useTodoStore, { TodoType } from "@/store/todo.store";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import ShowAlert from "@/Components/Alert/Alert";
 
 type Props = {
@@ -11,9 +11,19 @@ type Props = {
 };
 
 const TodoItem = ({ todos }: Props) => {
-  const { handleClickCheck, handleClickDelete, handleClickEdit, handleChange } =
-    useTodoStore();
+  const {
+    handleClickCheck,
+    handleClickDelete,
+    handleClickEdit,
+    handleChange,
+    setTodos,
+  } = useTodoStore();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const handleOutSideClick = (e: MouseEvent): void => {
@@ -24,9 +34,9 @@ const TodoItem = ({ todos }: Props) => {
       });
     };
 
-    document.addEventListener("mousedown", handleOutSideClick);
+    document.addEventListener("click", handleOutSideClick);
     return () => {
-      document.removeEventListener("mousedown", handleOutSideClick);
+      document.removeEventListener("click", handleOutSideClick);
     };
   }, [inputRefs, todos, handleClickEdit]);
 
@@ -69,67 +79,69 @@ const TodoItem = ({ todos }: Props) => {
   };
 
   return (
-    <Container>
-      {todos.map((item, index) => (
-        <ContentWrap key={`${item.id}_${index}`}>
-          <Image
-            src={
-              item.checked === false
-                ? "/images/icons/none-check.svg"
-                : "images/icons/check.svg"
-            }
-            width={20}
-            height={20}
-            alt='check'
-            onClick={() => handleClickCheck(item.id)}
-            style={{ cursor: "pointer" }}
-          />
-          {item.isEditable ? (
-            <Input
-              mode='small'
-              value={item.todo}
-              onChange={(e) => handleChange(item.id, e)}
-              style={{ width: "200px", textAlign: "center" }}
-              onKeyPress={handleOnkeyPress}
-              ref={(el: any) => (inputRefs.current[index] = el)}
+    mounted && (
+      <Container>
+        {todos.map((item, index) => (
+          <ContentWrap key={`${item.id}_${index}`}>
+            <Image
+              src={
+                item.checked === false
+                  ? "/images/icons/none-check.svg"
+                  : "images/icons/check.svg"
+              }
+              width={20}
+              height={20}
+              alt='check'
+              onClick={() => handleClickCheck(item.id)}
+              style={{ cursor: "pointer" }}
             />
-          ) : (
-            <div className={item.checked ? "checked" : "common"}>
-              {item.todo}
-            </div>
-          )}
-          <div style={{ display: "flex", gap: 8 }}>
-            <div>{dDay(item.date)}</div>
-            <div className='icon-wrap'>
-              {item.isEditable ? (
-                <Image
-                  src='images/icons/enter.svg'
-                  width={16}
-                  height={16}
-                  alt='edit'
-                  onClick={() => handleClickEdit(item.id)}
-                />
-              ) : (
-                <Image
-                  src='images/icons/edit.svg'
-                  width={16}
-                  height={16}
-                  alt='edit'
-                  onClick={() => handleClickEdit(item.id)}
-                />
-              )}
-              <Image
-                src='images/icons/delete.svg'
-                width={16}
-                height={16}
-                alt='edit'
-                onClick={() => onClickDelete(item.id)}
+            {item.isEditable ? (
+              <Input
+                mode='small'
+                value={item.todo}
+                onChange={(e) => handleChange(item.id, e)}
+                style={{ width: "200px", textAlign: "center" }}
+                onKeyDown={handleOnkeyPress}
+                ref={(el: any) => (inputRefs.current[index] = el)}
               />
+            ) : (
+              <div className={item.checked ? "checked" : "common"}>
+                {item.todo}
+              </div>
+            )}
+            <div style={{ display: "flex", gap: 8 }}>
+              <div>{dDay(item.date)}</div>
+              <div className='icon-wrap'>
+                {item.isEditable ? (
+                  <Image
+                    src='images/icons/enter.svg'
+                    width={16}
+                    height={16}
+                    alt='edit'
+                    onClick={() => handleClickEdit(item.id)}
+                  />
+                ) : (
+                  <Image
+                    src='images/icons/edit.svg'
+                    width={16}
+                    height={16}
+                    alt='edit'
+                    onClick={() => handleClickEdit(item.id)}
+                  />
+                )}
+                <Image
+                  src='images/icons/delete.svg'
+                  width={16}
+                  height={16}
+                  alt='edit'
+                  onClick={() => onClickDelete(item.id)}
+                />
+              </div>
             </div>
-          </div>
-        </ContentWrap>
-      ))}
-    </Container>
+          </ContentWrap>
+        ))}
+      </Container>
+    )
   );
 };
 

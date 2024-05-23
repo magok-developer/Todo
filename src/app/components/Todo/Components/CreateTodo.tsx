@@ -99,7 +99,7 @@ const CreateTodo = () => {
               <Input
                 value={input}
                 onChange={handleChange}
-                onKeyPress={handleOnkeyPress}
+                onKeyDown={handleOnkeyPress}
                 style={{ width: "380px" }}
               />
               <div className='button' onClick={handleClick}>

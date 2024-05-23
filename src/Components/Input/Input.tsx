@@ -10,18 +10,18 @@ type Props = INPUT_STYLE_PROPS & {
   value?: string;
   onChange?: (e: any) => void;
   style?: React.CSSProperties;
-  onKeyPress?: (e: any) => void;
+  onKeyDown?: (e: any) => void;
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ mode = "medium", value, onChange, style, onKeyPress }, ref) => {
+  ({ mode = "medium", value, onChange, style, onKeyDown }, ref) => {
     return (
       <InputStyle
         mode-={mode}
         ref={ref}
         value={value}
         onChange={onChange}
-        onKeyPress={onKeyPress}
+        onKeyDown={onKeyDown}
         style={style}
       />
     );

@@ -1,7 +1,7 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import DiaryItem from "./components/DiaryItem";
-import { useDiaryStore } from "@/store/diary.store";
+import useDiaryStore from "@/store/diary.store";
 
 type Props = {
   diaryMenuVisible: boolean;

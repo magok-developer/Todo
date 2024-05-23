@@ -3,8 +3,9 @@ import Image from "next/image";
 import styled from "@emotion/styled";
 import { color } from "@/styles/color";
 import DiaryEdit from "./DiaryEdit";
-import { useDiaryStore } from "@/store/diary.store";
+
 import ShowAlert from "@/Components/Alert/Alert";
+import useDiaryStore from "@/store/diary.store";
 
 type Props = {
   diaryId: number;

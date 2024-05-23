@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { diaryData } from "../../public/data/dummyData";
+import { persist } from "zustand/middleware";
 
 export type DiaryType = {
   id: number;
@@ -34,37 +35,46 @@ type DiaryStore = {
   ) => void;
 };
 
-export const useDiaryStore = create<DiaryStore>((set) => ({
-  diaries: diaryData,
-  filter: "",
-  nextId: { current: diaryData.map((diary) => diary.id).length + 1 },
-  detailVisible: null,
-  createVisible: false,
-  editVisible: false,
-  inputValue: "",
-  textareaValue: "",
-  setDiaries: (diaries) => set({ diaries }),
-  setFilter: (filter) => set({ filter }),
-  setDetailVisible: (detailVisible) => set({ detailVisible }),
-  setCreateVisible: (createVisible) => set({ createVisible }),
-  setEditVisible: (editVisible) => set({ editVisible }),
-  setInputValue: (value) => set({ inputValue: value }),
-  setTextareaValue: (value) => set({ textareaValue: value }),
-  handleClickDelete: (id) =>
-    set((state) => ({
-      diaries: state.diaries.filter((item) => item.id !== id),
-    })),
-  handleClickCreate: (title, content, date, icon) =>
-    set((state) => ({
-      diaries: [
-        ...state.diaries,
-        {
-          id: state.nextId.current++,
-          title: title,
-          content: content,
-          date,
-          icon: icon,
-        },
-      ],
-    })),
-}));
+const useDiaryStore = create(
+  persist<DiaryStore>(
+    (set) => ({
+      diaries: diaryData,
+      filter: "",
+      nextId: { current: diaryData.map((diary) => diary.id).length + 1 },
+      detailVisible: null,
+      createVisible: false,
+      editVisible: false,
+      inputValue: "",
+      textareaValue: "",
+      setDiaries: (diaries) => set({ diaries }),
+      setFilter: (filter) => set({ filter }),
+      setDetailVisible: (detailVisible) => set({ detailVisible }),
+      setCreateVisible: (createVisible) => set({ createVisible }),
+      setEditVisible: (editVisible) => set({ editVisible }),
+      setInputValue: (value) => set({ inputValue: value }),
+      setTextareaValue: (value) => set({ textareaValue: value }),
+      handleClickDelete: (id) =>
+        set((state) => ({
+          diaries: state.diaries.filter((item) => item.id !== id),
+        })),
+      handleClickCreate: (title, content, date, icon) =>
+        set((state) => ({
+          diaries: [
+            ...state.diaries,
+            {
+              id: state.nextId.current++,
+              title: title,
+              content: content,
+              date,
+              icon: icon,
+            },
+          ],
+        })),
+    }),
+    {
+      name: "diary-storage",
+    }
+  )
+);
+
+export default useDiaryStore;

@@ -3,8 +3,8 @@ import { color } from "@/styles/color";
 import Button from "@/Components/Button/Button";
 import DiaryDetail from "./DiaryDetail";
 import CreateDiary from "./CreateDiary";
-import { useDiaryStore } from "@/store/diary.store";
 import Image from "next/image";
+import useDiaryStore from "@/store/diary.store";
 
 const DiaryItem = () => {
   const {
