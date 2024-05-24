@@ -3,9 +3,9 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import Image from "next/image";
-import Todo from "./components/Todo/Todo";
+import Todo from "./Components/Todo/Todo";
 import { useState } from "react";
-import Diary from "./components/Diary/Diary";
+import Diary from "./Components/Diary/Diary";
 
 const month = [
   "Jan",
