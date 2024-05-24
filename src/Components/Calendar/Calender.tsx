@@ -41,10 +41,8 @@ const Calender = ({ date, onChange }: CalenderProps) => {
         selected={date}
         closeOnScroll={false} // 스크롤을 움직였을 때 자동으로 닫히도록 설정 기본값 false
         onChange={(date: Date) => onChange(date)}
-        /////////////////////
         renderCustomHeader={({
           date,
-          changeYear,
           decreaseMonth,
           increaseMonth,
           prevMonthButtonDisabled,
@@ -82,7 +80,6 @@ const Calender = ({ date, onChange }: CalenderProps) => {
             </div>
           </div>
         )}
-        ///////////////////////
         dayClassName={(_date: Date) => {
           // 현재 선택된 월의 날짜인지 확인
           const isCurrentMonth = _date.getMonth() === date!.getMonth();

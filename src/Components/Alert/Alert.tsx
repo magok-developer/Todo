@@ -1,7 +1,7 @@
 import { color } from "@/styles/color";
 import styled from "@emotion/styled";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 type Props = {
   handleClickDelete: (id: number) => void;
