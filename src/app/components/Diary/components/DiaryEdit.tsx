@@ -9,6 +9,7 @@ import Calender from "@/Components/Calendar/Calender";
 import useChangeDateRange from "@/hook/useChangeDateRange";
 import useDiaryStore, { DiaryType } from "@/store/diary.store";
 import { icons } from "../../../../../public/static/icons";
+import DiaryButton from "@/Components/Button/DiaryButton";
 
 type Props = {
   selectedDiary: DiaryType;
@@ -81,16 +82,8 @@ const DiaryEdit = ({ selectedDiary }: Props) => {
 
   return (
     <Container>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-
-          marginBottom: "8px",
-        }}
-      >
-        <div style={{ display: "flex", gap: "16px" }}>
+      <div className='top-wrap'>
+        <div className='icon-wrap'>
           {icons.map((item, index) => (
             <Image
               key={index}
@@ -105,52 +98,20 @@ const DiaryEdit = ({ selectedDiary }: Props) => {
         </div>
         <Calender onChange={onChangeDate} date={date.date} />
       </div>
-      <Input
-        value={input}
-        style={{
-          background: color.gray,
-          border: `1px solid ${color.gray}`,
-          width: "100%",
-          padding: "0px 10px",
-        }}
-        onChange={handleChangeInput}
-      />
+      <Input value={input} color='diary' onChange={handleChangeInput} />
       <Textarea
         value={textarea}
-        style={{ width: "100%", marginTop: "12px" }}
+        style={{ marginTop: "12px" }}
         onChange={handleChangeTextarea}
       />
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: "12px",
-          gap: "8px",
-        }}
-      >
-        <div
-          className='button'
-          style={{
-            background: color.gray,
-            color: color.deepGray,
-            cursor: "pointer",
-          }}
-          onClick={handleClickPrevious}
-        >
+      <div className='button-wrap'>
+        <DiaryButton color='back' onClick={handleClickPrevious}>
           이전
-        </div>
-        <div
-          className='button'
-          style={{
-            background: color.blue,
-            color: color.white,
-            cursor: "pointer",
-          }}
-          onClick={handleClickSave}
-        >
+        </DiaryButton>
+
+        <DiaryButton color='done' onClick={handleClickSave}>
           등록
-        </div>
+        </DiaryButton>
       </div>
     </Container>
   );
@@ -161,14 +122,23 @@ export default DiaryEdit;
 const Container = styled.div`
   padding: 24px;
 
-  .button {
-    width: 51px;
-    height: 26px;
-    font-size: 12px;
-    font-weight: bold;
+  .top-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .icon-wrap {
+    display: flex;
+    gap: 16px;
+  }
+
+  .button-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    margin-top: 12px;
+    gap: 8px;
   }
 `;

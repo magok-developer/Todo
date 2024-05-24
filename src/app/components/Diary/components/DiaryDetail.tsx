@@ -6,6 +6,7 @@ import DiaryEdit from "./DiaryEdit";
 
 import ShowAlert from "@/Components/Alert/Alert";
 import useDiaryStore from "@/store/diary.store";
+import DiaryButton from "@/Components/Button/DiaryButton";
 
 type Props = {
   diaryId: number;
@@ -41,69 +42,31 @@ const DiaryDetail = ({ diaryId }: Props) => {
     <>
       {selectedDiary && editVisible === false ? (
         <Wrap>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div className='top-wrap'>
+            <div className='title-wrap'>
               <Image
                 src={selectedDiary.icon}
                 width={20}
                 height={20}
                 alt='battery'
               />
-              <div className='title'>{selectedDiary.title}</div>
+              <h3 className='title'>{selectedDiary.title}</h3>
             </div>
-            <div className='date'>{selectedDiary.date}</div>
+            <p className='date'>{selectedDiary.date}</p>
           </div>
 
           <Content>{selectedDiary.content}</Content>
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              marginTop: "12px",
-              gap: "8px",
-            }}
-          >
-            <div
-              className='button'
-              style={{
-                background: color.gray,
-                color: color.deepGray,
-                cursor: "pointer",
-              }}
-              onClick={handleClickBack}
-            >
+          <div className='button-wrap'>
+            <DiaryButton color='back' onClick={handleClickBack}>
               이전
-            </div>
-            <div
-              className='button'
-              style={{
-                background: color.blue,
-                color: color.white,
-                cursor: "pointer",
-              }}
-              onClick={handleClickEdit}
-            >
+            </DiaryButton>
+            <DiaryButton color='done' onClick={handleClickEdit}>
               수정
-            </div>
-            <div
-              className='button'
-              style={{
-                background: color.red,
-                color: color.white,
-                cursor: "pointer",
-              }}
-              onClick={() => onClickDelete(diaryId)}
-            >
+            </DiaryButton>
+            <DiaryButton color='delete' onClick={() => onClickDelete(diaryId)}>
               삭제
-            </div>
+            </DiaryButton>
           </div>
         </Wrap>
       ) : (
@@ -120,21 +83,33 @@ const Wrap = styled.div`
   height: 100%;
   padding: 24px;
   overflow: hidden;
+
+  .top-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
   .title {
     font-weight: bold;
   }
+
   .date {
     font-size: 12px;
   }
-  .button {
-    width: 51px;
-    height: 26px;
-    font-size: 12px;
-    font-weight: bold;
+
+  .button-wrap {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    margin-top: 12px;
+    gap: 8px;
   }
 `;
 

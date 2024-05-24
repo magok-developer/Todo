@@ -39,9 +39,7 @@ export default function Todo({ todoMenuVisible }: Props) {
       {todoMenuVisible && (
         <Menu>
           <MenuWrap>
-            <div style={{ color: color.black, fontWeight: "bold" }}>
-              {todoLength.length} items
-            </div>
+            <p className='items'>{todoLength.length} items</p>
             <FilterWrap>
               <div
                 onClick={handleClickAll}
@@ -62,10 +60,7 @@ export default function Todo({ todoMenuVisible }: Props) {
                 Complete
               </div>
             </FilterWrap>
-            <div
-              style={{ color: color.deepGray, cursor: "pointer" }}
-              onClick={handleClickClear}
-            >
+            <div className='clear-complete' onClick={handleClickClear}>
               Clear Complete
             </div>
           </MenuWrap>
@@ -106,6 +101,13 @@ const MenuWrap = styled.div`
     cursor: pointer;
   }
   .common {
+    cursor: pointer;
+  }
+  .items {
+    font-weight: bold;
+  }
+  .clear-complete {
+    color: ${color.deepGray};
     cursor: pointer;
   }
 `;

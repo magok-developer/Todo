@@ -1,4 +1,5 @@
 import Button from "@/Components/Button/Button";
+import DiaryButton from "@/Components/Button/DiaryButton";
 import Calender from "@/Components/Calendar/Calender";
 import Input from "@/Components/Input/Input";
 import useChangeDateRange from "@/hook/useChangeDateRange";
@@ -89,22 +90,20 @@ const CreateTodo = () => {
                 onClick={handleClose}
               />
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "12px",
-              }}
-            >
+            <div className='input-button-wrap'>
               <Input
                 value={input}
                 onChange={handleChange}
                 onKeyDown={handleOnkeyPress}
                 style={{ width: "380px" }}
               />
-              <div className='button' onClick={handleClick}>
+              <DiaryButton
+                color='done'
+                onClick={handleClick}
+                className='button'
+              >
                 +
-              </div>
+              </DiaryButton>
             </div>
           </Wrap>
         </Container>
@@ -134,22 +133,16 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
 
+  .input-button-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
   .button {
     width: 49px;
     height: 30px;
-    background-color: ${color.blue};
     font-size: 20px;
-    font-weight: bold;
-    color: ${color.white};
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 6px;
-
-    box-sizing: border-box;
-
-    cursor: pointer;
   }
 `;
 

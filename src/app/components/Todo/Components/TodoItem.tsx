@@ -109,7 +109,7 @@ const TodoItem = ({ todos }: Props) => {
                 {item.todo}
               </div>
             )}
-            <div style={{ display: "flex", gap: 8 }}>
+            <div className='right-wrap'>
               <div>{dDay(item.date)}</div>
               <div className='icon-wrap'>
                 {item.isEditable ? (
@@ -176,6 +176,11 @@ const ContentWrap = styled.div`
   box-sizing: border-box;
 
   font-size: 14px;
+
+  .right-wrap {
+    display: flex;
+    gap: 8px;
+  }
 
   .icon-wrap {
     display: flex;

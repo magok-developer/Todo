@@ -4,6 +4,7 @@ import { forwardRef } from "react";
 
 type INPUT_STYLE_PROPS = {
   mode?: "small" | "medium";
+  color?: "diary" | "todo";
 };
 
 type Props = INPUT_STYLE_PROPS & {
@@ -14,10 +15,14 @@ type Props = INPUT_STYLE_PROPS & {
 };
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ mode = "medium", value, onChange, style, onKeyDown }, ref) => {
+  (
+    { mode = "medium", color = "todo", value, onChange, style, onKeyDown },
+    ref
+  ) => {
     return (
       <InputStyle
         mode-={mode}
+        color={color}
         ref={ref}
         value={value}
         onChange={onChange}
@@ -44,8 +49,22 @@ const SIZE_TYPE = {
   },
 };
 
+const COLOR_TYPE = {
+  ["diary"]: {
+    background: color.gray,
+    border: `1px solid ${color.gray}`,
+    width: "100%",
+    padding: "0px 10px",
+  },
+  ["todo"]: {
+    background: color.white,
+    border: `1px solid ${color.deepGray}`,
+  },
+};
+
 const InputStyle = styled.input<any>`
   ${({ mode }) => SIZE_TYPE[mode as "medium"]};
+  ${({ color }) => COLOR_TYPE[color as "todo"]}
   display: flex;
   align-items: center;
 
@@ -55,5 +74,4 @@ const InputStyle = styled.input<any>`
   height: 30px;
   border-radius: 4px;
   font-size: 14px;
-  border: 1px solid ${color.deepGray};
 `;

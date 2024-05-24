@@ -8,16 +8,13 @@ type Props = {
 };
 
 const Textarea = ({ value, style, onChange }: Props) => {
-  return (
-    <>
-      <TextareaStyle value={value} style={style} onChange={onChange} />
-    </>
-  );
+  return <TextareaStyle value={value} style={style} onChange={onChange} />;
 };
 
 export default Textarea;
 
 const TextareaStyle = styled.textarea`
+  width: 100%;
   height: 180px;
   border-radius: 6px;
   padding: 10px;

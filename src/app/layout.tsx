@@ -1,4 +1,5 @@
 import "@/styles/global.css";
+import "../../public/reset.css";
 import { color } from "@/styles/color";
 import type { Metadata } from "next";
 
@@ -18,9 +19,7 @@ export default function RootLayout({
         style={{
           background: color.gray,
           display: "flex",
-
           justifyContent: "center",
-
           overflow: "hidden",
           height: "100vh",
         }}

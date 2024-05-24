@@ -62,7 +62,7 @@ export default function Home() {
           height={24}
           alt='menu'
           onClick={mode ? handleClickDiaryMenu : handleClickMenu}
-          style={{ cursor: "pointer" }}
+          className='icon'
         />
         <Image
           src={mode ? "/images/icons/todo.svg" : "/images/icons/book.svg"}
@@ -70,31 +70,18 @@ export default function Home() {
           height={24}
           alt='book'
           onClick={handleClickMode}
-          style={{ cursor: "pointer" }}
+          className='icon'
         />
-        <DateWrap>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <div
-              style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-              }}
-            >
-              {formattedDate}
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span style={{ fontSize: "12px", fontWeight: "bold" }}>
-                {formattedYear}
-              </span>
-              <span style={{ fontSize: "16px", fontWeight: "bold" }}>
-                {formattedMonth}
-              </span>
+        <DateContainer>
+          <div className='date-wrap'>
+            <p className='date'>{formattedDate}</p>
+            <div className='wrap'>
+              <p className='year'>{formattedYear}</p>
+              <p className='month'>{formattedMonth}</p>
             </div>
           </div>
-          <span style={{ fontSize: "12px", fontWeight: "bold" }}>
-            {formattedWeek}
-          </span>
-        </DateWrap>
+          <p className='week'>{formattedWeek}</p>
+        </DateContainer>
       </Title>
       {mode ? (
         <Diary diaryMenuVisible={diaryMenuVisible} />
@@ -120,13 +107,48 @@ const Title = styled.div`
   box-sizing: border-box;
 
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
+
+  .icon {
+    cursor: pointer;
+  }
 `;
 
-const DateWrap = styled.div`
+const DateContainer = styled.div`
   display: flex;
   flex: 1;
   align-items: center;
   justify-content: space-between;
 
   font-family: "Nunito", sans-serif;
+
+  .date-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .date {
+    font-size: 32px;
+    font-weight: bold;
+  }
+
+  .wrap {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .year {
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  .month {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .week {
+    font-size: 12px;
+    font-weight: bold;
+  }
 `;

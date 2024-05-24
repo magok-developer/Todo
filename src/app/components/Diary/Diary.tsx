@@ -33,22 +33,20 @@ const Diary = ({ diaryMenuVisible }: Props) => {
       {diaryMenuVisible && (
         <Menu>
           <MenuWrap>
-            <div style={{ color: color.black, fontWeight: "bold" }}>
-              {diaries.length} items
-            </div>
+            <p className='items'>{diaries.length} items</p>
             <FilterWrap>
-              <div
+              <p
                 onClick={() => handleClickSort("new")}
                 className={filter === "new" ? "choice" : "common"}
               >
                 최신순
-              </div>
-              <div
+              </p>
+              <p
                 onClick={() => handleClickSort("old")}
                 className={filter === "old" ? "choice" : "common"}
               >
                 오래된순
-              </div>
+              </p>
             </FilterWrap>
           </MenuWrap>
         </Menu>
@@ -88,6 +86,10 @@ const MenuWrap = styled.div`
   }
   .common {
     cursor: pointer;
+  }
+
+  .items {
+    font-weight: bold;
   }
 `;
 
