@@ -96,7 +96,6 @@ const MenuWrap = styled.div`
 const FilterWrap = styled.div`
   display: flex;
   gap: 16px;
-
   color: ${color.deepGray};
   font-weight: bold;
 `;
@@ -108,6 +107,5 @@ const Content = styled.div`
   background-color: ${color.white};
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.15);
   box-sizing: border-box;
-
   position: relative;
 `;
